@@ -1,0 +1,11 @@
+//AQUI GERA O CLIENT E O MODEL NA TABELA 
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// AQUI CRIA O MODEL 
