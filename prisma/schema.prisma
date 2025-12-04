@@ -8,4 +8,29 @@ datasource db {
   provider = "postgresql"
 }
 
-// AQUI CRIA O MODEL 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  habits    Habit[]
+  createdAt DateTime @default(now())
+}
+
+model Habit {
+  id          Int               @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String?
+  createdAt   DateTime          @default(now())
+  completions HabitCompletion[]
+  user        User              @relation(fields: [userId], references: [id])
+}
+
+model HabitCompletion {
+  id      Int      @id @default(autoincrement())
+  habitId Int
+  date    DateTime
+  habit   Habit    @relation(fields: [habitId], references: [id])
+
+  @@unique([habitId, date])
+}
