@@ -1,3 +1,4 @@
+
 import AuthService from "../service/AuthService.js";
 
 
@@ -7,11 +8,11 @@ class AuthController{
     }
 
     async register(req, res){
-        const {nome, email, senha} = req.body;
+        const {name, email, passWord} = req.body;
 
         try{
             
-            const userRegister = await this.authService.register(dados);
+            const userRegister = await this.authService.register(name, email, passWord);
 
             return res.status(201).json({userRegister});
 
@@ -22,11 +23,12 @@ class AuthController{
     }
 
     async login(req, res){
-        const {email, senha} = req.body;
+        const {email, passWord} = req.body;
 
         try{
-            const usuariotoken = await this.authService.login(email, senha)
-            return res.status(200).json({error: error.message});
+            const token = await this.authService.login(email, passWord)
+            
+            return res.status(200).json({token});
 
         }catch(error){
             res.status(400).json({error: error.message})
