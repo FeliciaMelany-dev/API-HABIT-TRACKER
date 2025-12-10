@@ -14,15 +14,19 @@ class Controller {
 
     async listarUmId(req, res) {
         const { id } = req.params;
+        
+        const idNumber = Number(id);
+        
 
-        if (isNaN(Number(id))) {
+        if (isNaN(Number(idNumber))) {
             return res.status(400).json({ mensagem: "ID inválido" });
         }
 
         try {
-            const umRegistro = await this.entidadeService.listarUmRegistroPorId(
-                Number(id)
-            );
+            const umRegistro = await this.entidadeService.listarUmId(
+                idNumber );
+
+                console.log(umRegistro)
 
             if (!umRegistro) {
                 return res.status(404).json({ mensagem: "Registro não encontrado" });
@@ -49,12 +53,16 @@ class Controller {
         const dadosAtualizados = req.body;
         try {
             const foiAtualizado = await this.entidadeService.atualizarRegistro(
-                dadosAtualizados, Number(id)
+                Number(id), dadosAtualizados
             );
+            console.log(foiAtualizado);
+
             if (!foiAtualizado) {
                 return res.status(400).json({ mensagem: 'registro não foi atualizado' });
             }
+
         return res.status(200).json({ mensagem: 'Atualizado com sucesso' });
+
         } catch (erro) {
             return res.status(500).json({ mensagem: 'Erro ao atualizar o registro' });
         }
