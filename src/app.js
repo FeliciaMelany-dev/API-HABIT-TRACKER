@@ -1,10 +1,7 @@
 import express from 'express';
-import auth from './routes/authRouter';
+import registerRoutes from ('./routes/index.js');
 
 const app = express();
-
-app.use(express.json());
-
-app.use('/login', '/register', auth)
+registerRoutes(app);
 
 export default app;
