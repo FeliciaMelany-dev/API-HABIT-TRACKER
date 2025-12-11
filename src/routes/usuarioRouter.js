@@ -6,10 +6,10 @@ import autenticacao from "../middlewares/authMiddlewares.js";
 const usuario = Router();
 const usuarioController = new UsuarioController();
 
-usuario.use(autenticacao)
+usuario.use(autenticacao);
 
-usuario.get("/:id", (req, res) =>  usuarioController.listarUmId(req, res));
-usuario.put("/:id", (req, res) => usuarioController.atualizar(req, res))
-usuario.delete("/:id",(req, res) => usuarioController.deletar(req, res))
+usuario.get("/me", (req, res) =>  usuarioController.me(req, res));
+usuario.put("/me", (req, res) => usuarioController.atualizar(req, res))
+usuario.delete("/me",(req, res) => usuarioController.deletar(req, res))
 
-export default usuario;
+export default usuario;      

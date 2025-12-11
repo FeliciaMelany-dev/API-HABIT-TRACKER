@@ -6,6 +6,7 @@ class UsuarioService extends Service {
     constructor(){
         super(prisma.user)
     }
+
 }
 
 export default UsuarioService;

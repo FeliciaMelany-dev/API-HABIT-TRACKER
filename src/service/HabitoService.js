@@ -1,72 +1,40 @@
-import
+import prisma from "../config/prisma.js";
+import Service from "./Service.js";
 
-
-class Service {
-    constructor(modelName) { //Precisa do modelo que ele vai acessar no banco de dados
-        this.model = modelName;
+class HabitoService extends Service{
+    constructor(){
+        super(prisma.habit)
     }
 
-    async getAll() {
-        try {
-            
-            const ReturnAll = await database[this.model].findAll({})
-
-            return ReturnAll;
-        } catch (erro) {
-            
-        }
+    async listarDoUsuario(usuarioId){
+        return await this.model.findMany({where:{ userId}})
     }
 
-    async getById(id){
-        try{
-            const date = await database[this.model].findByPk(id);
-
-            return date;
-        }catch(error){
-
-        }
+    async listarUmDoUsuario(habitId, userId){
+        return await this.model.findFirst({where: {id: habitId, userId}})
     }
 
-    async creat(data){
-        try{
-        const newData = await database[this.model].create(data);
-            return newData;
-        }catch(error){
-
-        }
+    async criarParaUsuario(userId, data){
+        return await this.model.create({data: {...data, userId}})
     }
 
-    async update(id, data){
-
-        try{
-
-        const newUpdateData = await database[this.model].update(data, {where:{id:id}});
-         return newUpdateData
-        }catch(error){
-
-        }
-    }
-    async updateOne(id, data){
-        try{
-            const newUpdateOne = await database[this.model].update(data, {where:{id:id}});
-            return newUpdateOne;
-
-        }catch(error){
-
-        }
+    async atualizarDoUsuario(habitId, userId, data){
+        return await this.model.update({where:{
+            id_userId: {
+                id: habitId, userId
+            },
+            data
+        }})
     }
 
-    async deleted(id){
-
-        try{
-        await database[this.model].destroy({where:{id:id}});
-        }catch(error){
-
-        }
+    async deletarDoUsuario(habitoId, userId){
+        return await this.model.delete({where:{
+            id_userId:{
+                id: habitoId, userId
+            }
+        }})
     }
-
-
 }
 
 
-export default Service;
+export default HabitoService; 

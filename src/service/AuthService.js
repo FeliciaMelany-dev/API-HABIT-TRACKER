@@ -31,7 +31,7 @@ class AuthService{
 
 
     async login (email, passWord){
-
+        console.log("LOGIN SECRET:", process.env.JWT_SECRET);
         const usuario = await prisma.user.findUnique({
             where: {email}
         });
@@ -52,6 +52,7 @@ class AuthService{
             process.env.JWT_SECRET, 
             {expiresIn: "7h"}
         )
+        
 
         return token;
     };

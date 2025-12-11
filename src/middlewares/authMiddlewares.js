@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-
-export function autenticacao(req, res, next){
+import prisma from "../config/prisma.js";
+export async function autenticacao(req, res, next){
     const authHeader = req.headers.authorization;
 
     if(!authHeader || !authHeader.startsWith("Bearer ")){
@@ -12,11 +12,21 @@ export function autenticacao(req, res, next){
     try{
         const decodifica = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.userId = decodifica.id;
+       const usuario = await prisma.user.findUnique({
+            where: { id: decodifica.id },
+            select: { id: true, email: true, name: true }
+        });
 
-        next();
+        if (!usuario) {
+            return res.status(401).json({ error: "Usuário não encontrado" });
+        }
+
+        req.user = usuario;
+        next()
 
     }catch(error){
+        console.log("MIDDLEWARE SECRET:", process.env.JWT_SECRET);
+
         return res.status(401).json({error: "Token inválido"})
     }
 }

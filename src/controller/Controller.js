@@ -5,8 +5,10 @@ class Controller {
 
     async listarTodos(req, res) {
         try {
+
         const listaDeRegistro = await this.entidadeService.listaTodosOsRegistros();
         res.json(listaDeRegistro);
+
         } catch (err) {
             res.status(500).json({ mensagem: 'Erro ao buscar registros' });
         }
@@ -41,8 +43,10 @@ class Controller {
     async criarNovo(req, res) {
         const dadosParaCriacao = req.body;
         try {
+
             const novoRegistroCriado = await this.entidadeService.criarRegistro(dadosParaCriacao);
             return res.status(200).json(novoRegistroCriado);
+
         } catch (erro) {
             return res.status(500).json({ mensagem: 'Erro ao criar o registro' });
         }
@@ -52,6 +56,7 @@ class Controller {
         const { id } = req.params;
         const dadosAtualizados = req.body;
         try {
+            
             const foiAtualizado = await this.entidadeService.atualizarRegistro(
                 Number(id), dadosAtualizados
             );

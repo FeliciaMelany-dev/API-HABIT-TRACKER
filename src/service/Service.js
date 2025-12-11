@@ -1,5 +1,4 @@
 
-
 class Service {
     constructor(modelName) { 
         this.model = modelName;

@@ -7,5 +7,5 @@ export default function registerRoutes(app) {
   app.use(express.json());  
   app.use('/api/auth', auth);
   app.use('/api/usuario', usuario);
-  app.use('/api', habito);
+  app.use('/api/habito', habito);
 }

@@ -7,13 +7,13 @@ const habitoController = new HabitoController();
 
 habito.use(autenticacao)
 
-habito.get("/habitos", (req, res) => habitoController.listarTodos(req, res));
-habito.get("/habitos/:id", (req, res) => habitoController.listarUmId(req, res));
-habito.post("/habitos", (req, res) => habitoController.criarNovo(req, res));
-habito.put("/habitos/:id", (req, res) => habitoController.atualizar(req, res));
-habito.delete("/habitos/:id", (req, res) => habitoController.deletar(req, res));
+habito.post("/", (req, res) => habitoController.criar(req, res));
+habito.get("/", (req, res) => habitoController.listarTodos(req, res));
+habito.get("/:id", (req, res) => habitoController.listarUm(req, res));
+habito.put("/:id", (req, res) => habitoController.atualizar(req, res));
+habito.delete("/:id", (req, res) => habitoController.deletar(req, res));
 
-habito.post("/habitos/:id/log", (req, res) => HabitoController(req, res))
+habito.post(":id/log", (req, res) => habitoController.logar(req, res))
 
 export default habito;
 
