@@ -8,13 +8,26 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
-  passWord  String
+  email     String    @unique
+  password  String
+  role      UserRole  @default(USER)
   habits    Habit[]
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([isDeleted])
+  @@index([email])
+  @@map("users")
 }
 
 model Habit {
@@ -23,18 +36,30 @@ model Habit {
   title       String
   description String?
   createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  isDeleted   Boolean           @default(false) @map("is_deleted")
+  deletedAt   DateTime?         @map("deleted_at")
   completions HabitCompletion[]
   user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([isDeleted])
+  @@map("habits")
 }
 
 model HabitCompletion {
-  id      Int      @id @default(autoincrement())
-  habitId Int
-  date    DateTime @db.Date
-  habit   Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  id        Int       @id @default(autoincrement())
+  habitId   Int
+  date      DateTime  @db.Date
+  createdAt DateTime  @default(now()) @map("created_at")
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  deletedAt DateTime? @map("deleted_at")
+  habit     Habit     @relation(fields: [habitId], references: [id], onDelete: Cascade)
 
   @@unique([habitId, date])
   @@index([habitId])
+  @@index([date])
+  @@index([isDeleted])
+  @@map("habit_completions")
 }
+
