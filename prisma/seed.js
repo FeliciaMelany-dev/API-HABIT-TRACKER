@@ -1,6 +1,5 @@
-import prisma from "../src/config/prisma.js"
+import prisma from "../src/config/prisma.js";
 import bcrypt from "bcryptjs";
-
 
 function generatePastDates(days) {
   const dates = [];
@@ -20,19 +19,22 @@ async function main() {
 
   console.log("Banco limpo.");
 
-  const passWord = await bcrypt.hash("123456", 10);
+  const password = await bcrypt.hash("123456", 10);
 
+  // Aqui você escolhe quem será ADMIN
   const usersData = [
-    { name: "Felicia", email: "felicia@example.com" },
-    { name: "Yasmim", email: "yasmim@example.com" },
-    { name: "João Pedro", email: "joao@example.com" },
-    { name: "Maria Clara", email: "maria@example.com" },
-    { name: "Lucas Henrique", email: "lucas@example.com" },
-    { name: "Ana Vitória", email: "ana@example.com" },
-    { name: "Rafael Luiz", email: "rafael@example.com" },
-    { name: "Beatriz Lima", email: "beatriz@example.com" },
-    { name: "Carlos Eduardo", email: "cadu@example.com" },
-    { name: "Juliana Torres", email: "juliana@example.com" },
+    { name: "Felicia", email: "felicia@example.com", role: "ADMIN" },
+    { name: "Yasmim", email: "yasmim@example.com", role: "ADMIN" },
+
+    // Usuários normais
+    { name: "João Pedro", email: "joao@example.com", role: "USER" },
+    { name: "Maria Clara", email: "maria@example.com", role: "USER" },
+    { name: "Lucas Henrique", email: "lucas@example.com", role: "USER" },
+    { name: "Ana Vitória", email: "ana@example.com", role: "USER" },
+    { name: "Rafael Luiz", email: "rafael@example.com", role: "USER" },
+    { name: "Beatriz Lima", email: "beatriz@example.com", role: "USER" },
+    { name: "Carlos Eduardo", email: "cadu@example.com", role: "USER" },
+    { name: "Juliana Torres", email: "juliana@example.com", role: "USER" },
   ];
 
   const habitsTemplates = [
@@ -73,12 +75,15 @@ async function main() {
   for (const userData of usersData) {
     await prisma.user.create({
       data: {
-        ...userData,
-        passWord,
+        name: userData.name,
+        email: userData.email,
+        role: userData.role, // <-- agora salvando role
+        password,            // <-- corrigido: deve ser o nome do seu model
+
         habits: {
           create: habitsTemplates
-            .sort(() => Math.random() - 0.5) // embaralha hábitos
-            .slice(0, Math.floor(Math.random() * 3) + 2) // 2 a 4 hábitos por user
+            .sort(() => Math.random() - 0.5)
+            .slice(0, Math.floor(Math.random() * 3) + 2)
             .map((habit) => ({
               title: habit.title,
               description: habit.description,
@@ -94,7 +99,7 @@ async function main() {
 
 main()
   .catch((err) => {
-    console.error(" Erro no seed:", err);
+    console.error("Erro no seed:", err);
     process.exit(1);
   })
   .finally(async () => {
