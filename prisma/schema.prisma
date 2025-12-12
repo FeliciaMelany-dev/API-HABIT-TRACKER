@@ -62,3 +62,4 @@ model HabitCompletion {
   @@index([isDeleted])
   @@map("habit_completions")
 }
+
