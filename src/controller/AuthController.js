@@ -8,11 +8,11 @@ class AuthController{
     }
 
     async register(req, res){
-        const {name, email, passWord} = req.body;
+        const {name, email, password} = req.body;
 
         try{
             
-            const userRegister = await this.authService.register(name, email, passWord);
+            const userRegister = await this.authService.register(name, email, password);
 
             return res.status(201).json({userRegister});
 
@@ -23,10 +23,10 @@ class AuthController{
     }
 
     async login(req, res){
-        const {email, passWord} = req.body;
+        const {email, password} = req.body;
 
         try{
-            const token = await this.authService.login(email, passWord)
+            const token = await this.authService.login(email, password)
             
             return res.status(200).json({token});
 

@@ -12,7 +12,10 @@ class HabitoController extends Controller {
 
     async listarTodos(req, res){
         try{
-            const userId = req.user.Id;
+            const userId = req.user.id;
+            if(!userId){
+                console.log(userId)
+            }
             const dados = await this.habitoService.listarDoUsuario(userId);
 
             return res.status(200).json(dados)
@@ -24,10 +27,10 @@ class HabitoController extends Controller {
 
     async listarUm(req, res) {
         try {
-            const { id } = req.params;
+            const { habitId } = req.params;
             const userId = req.user.id;
 
-            const habito = await this.habitoService.listarUmHabito(id, userId);
+            const habito = await this.habitoService.listarUmDoUsuario(habitId, userId);
 
             return res.status(200).json(habito);
 
@@ -56,7 +59,7 @@ class HabitoController extends Controller {
             const userId = req.user.id;
             const body = req.body;
 
-            const atualizado = await this.habitoService.atualizarHabito(id, userId, body);
+            const atualizado = await this.habitoService.atualizarDoUsuario(id, userId, body);
 
             return res.status(200).json(atualizado);
 
@@ -70,7 +73,7 @@ class HabitoController extends Controller {
             const { id } = req.params;
             const userId = req.user.id;
 
-            await this.habitoService.deletarHabito(id, userId);
+            await this.habitoService.deletarDoUsuario(id, userId);
 
             return res.status(200).json({ mensagem: "Hábito deletado" });
 

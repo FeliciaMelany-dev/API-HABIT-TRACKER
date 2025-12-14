@@ -4,25 +4,27 @@ import jwt from "jsonwebtoken";
 
 class AuthService{
     
-    async register(name, email, passWord){
+    async register(name, email, password){
         const userExiste = await prisma.user.findUnique({where:{email}});
 
         if(userExiste){
             throw new Error ("Email já existe!")
         }
 
-        const hashedSenha = await bcrypt.hash(passWord, 12);
+        const hashedSenha = await bcrypt.hash(password, 12);
 
         const novoUsuario = await prisma.user.create({
             data:{
                 name,
                 email,
-                passWord: hashedSenha
+                password: hashedSenha,
+                role
             },
             select: {
                 id: true,
                 name: true,
-                email:true
+                email:true,
+                role:true
             }
         });
 
@@ -30,8 +32,8 @@ class AuthService{
     }
 
 
-    async login (email, passWord){
-        console.log("LOGIN SECRET:", process.env.JWT_SECRET);
+    async login (email, password){
+        
         const usuario = await prisma.user.findUnique({
             where: {email}
         });
@@ -40,7 +42,7 @@ class AuthService{
             throw new Error ("Credenciais inválidas")
         }
         
-        const senhaCompativel = await bcrypt.compare(passWord, usuario.passWord);
+        const senhaCompativel = await bcrypt.compare(password, usuario.password);
 
         if(!senhaCompativel){
             throw new Error ("Credenciais inválidas")
@@ -48,7 +50,10 @@ class AuthService{
 
         const token = jwt.sign(
 
-            {id: usuario.id},
+            {id: usuario.id,
+                email: user.email,
+                role: user.role
+            },
             process.env.JWT_SECRET, 
             {expiresIn: "7h"}
         )

@@ -14,12 +14,20 @@ class UsuarioController extends Controller {
         try{
             const userId = req.user.id;
             
-            const usuario = await this.usuarioService.listarUmId(userId);
+            const usuarioCompleto = await this.usuarioService.listarUmId(userId);
 
-            if(!usuario){
+            if(!usuarioCompleto){
                 return res.status(404).json({messagem: "Usuário não encontrado"})
             }
-            return res.status(200).json(usuario);
+
+            const {id, name, email, role, createdAt} = usuarioCompleto
+            return res.status(200).json({
+                id,
+                name,
+                email,
+                role,
+                createdAt
+            });
             
         }catch(error){
 
@@ -35,7 +43,14 @@ class UsuarioController extends Controller {
 
             const atualizado =  await this.usuarioService.atualizarRegistro(userId, dados);
 
-            return res.status(200).json(atualizado);
+            const {id, name, email, role, createdAt} = atualizado
+
+            return res.status(200).json({
+                id, 
+                name, 
+                email, 
+                role, 
+                createdAt});
 
         }catch(error){
             return res.status(400).json({ error: error.message });

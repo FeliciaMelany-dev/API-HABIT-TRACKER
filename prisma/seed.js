@@ -21,7 +21,7 @@ async function main() {
 
   const password = await bcrypt.hash("123456", 10);
 
-  // Aqui você escolhe quem será ADMIN
+
   const usersData = [
     { name: "Felicia", email: "felicia@example.com", role: "ADMIN" },
     { name: "Yasmim", email: "yasmim@example.com", role: "ADMIN" },
@@ -77,8 +77,8 @@ async function main() {
       data: {
         name: userData.name,
         email: userData.email,
-        role: userData.role, // <-- agora salvando role
-        password,            // <-- corrigido: deve ser o nome do seu model
+        role: userData.role, 
+        password,            
 
         habits: {
           create: habitsTemplates
