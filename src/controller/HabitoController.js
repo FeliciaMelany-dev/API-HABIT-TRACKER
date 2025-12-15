@@ -1,7 +1,6 @@
 import Controller from "./Controller.js";
 import HabitoService from "../service/HabitoService.js";
 
-const habitoService = new HabitoService();
 
 class HabitoController extends Controller {
     constructor() {
@@ -81,21 +80,6 @@ class HabitoController extends Controller {
             return res.status(400).json({ erro: error.message });
         }
     }
-
-    async logar(req, res) {
-        try {
-            const { id } = req.params;
-            const userId = req.user.id;
-
-            const registro = await this.habitoService.logar(id, userId);
-
-            return res.status(201).json(registro);
-
-        } catch (error) {
-            return res.status(400).json({ error: error.message });
-        }
-    }
 }
-
 
 export default HabitoController;
