@@ -18,7 +18,7 @@ class AuthService{
                 name,
                 email,
                 password: hashedSenha,
-                role
+                
             },
             select: {
                 id: true,
@@ -51,8 +51,8 @@ class AuthService{
         const token = jwt.sign(
 
             {id: usuario.id,
-                email: user.email,
-                role: user.role
+                email: usuario.email,
+                role: usuario.role
             },
             process.env.JWT_SECRET, 
             {expiresIn: "7h"}
