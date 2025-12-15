@@ -15,7 +15,7 @@ class RegistroController extends Controller {
             const userId = req.user.id;
             const { date } = req.body;
 
-            console.log("PARAMS:", req.params);
+            
 
 
             const registro = await this.registroService.registrarConclusao(
