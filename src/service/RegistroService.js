@@ -27,7 +27,7 @@ class RegistroService extends Service {
         });
 
         if (!habito) {
-            console.log({id,userId, date});
+            
             throw new Error("Hábito não encontrado ou não pertence ao usuário.")
         }
 

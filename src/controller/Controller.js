@@ -32,7 +32,7 @@ class Controller {
             const umRegistro = await this.entidadeService.listarUmId(
                 idNumber );
 
-                console.log(umRegistro)
+    
 
             if (!umRegistro) {
                 const erro = new Error('Registro não encontrado');
@@ -69,7 +69,6 @@ class Controller {
             const foiAtualizado = await this.entidadeService.atualizarRegistro(
                 Number(id), dadosAtualizados
             );
-            console.log(foiAtualizado);
 
             if (!foiAtualizado) {
                 const erro = new Error('Registro não foi atualizado');

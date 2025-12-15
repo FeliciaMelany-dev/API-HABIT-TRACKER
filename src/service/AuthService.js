@@ -19,6 +19,7 @@ class AuthService{
                 email,
                 password: hashedSenha,
                 
+                
             },
             select: {
                 id: true,

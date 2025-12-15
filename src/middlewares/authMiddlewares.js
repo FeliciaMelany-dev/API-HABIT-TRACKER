@@ -20,7 +20,7 @@ export async function autenticacao(req, res, next){
                 email: decodifica.email,
                 role: decodifica.role
              },
-            select: { id: true, email: true, name: true }
+            select: { id: true, email: true, name: true, role: true }
         });
 
         if (!usuario) {
@@ -31,7 +31,7 @@ export async function autenticacao(req, res, next){
         next()
 
     }catch(error){
-        console.log("MIDDLEWARE SECRET:", process.env.JWT_SECRET);
+        
 
         return res.status(401).json({error: "Token inválido"})
     }

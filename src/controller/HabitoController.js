@@ -12,9 +12,7 @@ class HabitoController extends Controller {
     async listarTodos(req, res){
         try{
             const userId = req.user.id;
-            if(!userId){
-                console.log(userId)
-            }
+            
             const dados = await this.habitoService.listarDoUsuario(userId);
 
             return res.status(200).json(dados)

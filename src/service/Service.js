@@ -38,8 +38,6 @@ class Service {
 
         try{
 
-            console.log(id, dadosAtualizados)
-
         const newUpdateData = await this.model.update({
             where: {id: (id)},
             data:dadosAtualizados
@@ -49,7 +47,6 @@ class Service {
          return newUpdateData;
 
         }catch(error){
-            console.log(error)
         }
     }
     async atualizarUm(id, data){
@@ -70,15 +67,23 @@ class Service {
             if(!registro){
                 throw new Error ("Registro não encontrado");
             }
-        await this.model.delete({where:{id:id}});
+        
 
         }catch(error){
             console.error(error)
         }
-    }
-
+        return await this.model.update({
+            where: {
+                id: id
+            },
+            data: {
+                isDeleted: true,
+                deletedAt: new Date()
+            }
+             
+    })
 
 }
-
+}
 
 export default Service;
