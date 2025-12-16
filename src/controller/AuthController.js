@@ -8,6 +8,7 @@ class AuthController{
     }
 
     async register(req, res){
+         console.log(req.body);
         const {name, email, password} = req.body;
 
         try{
