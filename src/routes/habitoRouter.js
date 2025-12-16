@@ -1,7 +1,7 @@
 import { Router } from "express";
 import HabitoController from "../controller/HabitoController.js";
 import RegistroController from "../controller/RegistroController.js";
-import { autenticacao } from '../middlewares/authMiddlewares.js';
+import { autenticacao } from "../middlewares/authMiddlewares.js";
 import { validacao } from "../middlewares/validateMiddleware.js";
 import { atualizaHabitSchema } from "../schema/atualizarHabito.js";
 import { criaHabito } from "../schema/criarHabito.schema.js";
@@ -9,7 +9,7 @@ const habito = Router();
 const habitoController = new HabitoController();
 const registroController = new RegistroController();
 
-habito.use(autenticacao)
+habito.use(autenticacao);
 
 /**
  * @swagger
@@ -18,7 +18,9 @@ habito.use(autenticacao)
  *   description: Endpoints para gerenciar hábitos
  */
 
-habito.post("/", validacao(criaHabito), (req, res) => habitoController.criar(req, res));
+habito.post("/", validacao(criaHabito), (req, res) =>
+  habitoController.criar(req, res)
+);
 /**
  * @swagger
  * /habito/{id}:
@@ -90,7 +92,9 @@ habito.get("/:id", (req, res) => habitoController.listarUm(req, res));
  *       200:
  *         description: Hábito atualizado
  */
-habito.put("/:id", validacao(atualizaHabitSchema), (req, res) => habitoController.atualizar(req, res)); 
+habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
+  habitoController.atualizar(req, res)
+);
 /**
  * @swagger
  * /habito/{id}:
@@ -107,7 +111,7 @@ habito.put("/:id", validacao(atualizaHabitSchema), (req, res) => habitoControlle
  *       204:
  *         description: Hábito removido com sucesso
  */
-habito.delete("/:id", (req, res) => habitoController.deletar(req, res)); 
+habito.delete("/:id", (req, res) => habitoController.deletar(req, res));
 /**
  * @swagger
  * /habito/{id}/completo:
@@ -125,7 +129,7 @@ habito.delete("/:id", (req, res) => habitoController.deletar(req, res));
  *         description: Registro de hábito completo criado
  */
 
-habito.post("/:id/completo", (req, res) => registroController.criar(req, res)); 
+habito.post("/:id/completo", (req, res) => registroController.criar(req, res));
 /**
  * @swagger
  * /habito/{id}/completo:
@@ -143,7 +147,7 @@ habito.post("/:id/completo", (req, res) => registroController.criar(req, res));
  *         description: Lista de registros de conclusão
  */
 
-habito.get("/:id/completo", (req, res) => registroController.listar(req, res)); 
+habito.get("/:id/completo", (req, res) => registroController.listar(req, res));
 /**
  * @swagger
  * /habito/{id}/completo/{registroId}:
@@ -166,6 +170,26 @@ habito.get("/:id/completo", (req, res) => registroController.listar(req, res));
  *         description: Registro removido com sucesso
  */
 
-habito.delete("/:id/completo/:registroId", (req, res) => registroController.deletar(req, res))
+habito.delete("/:id/completo/:registroId", (req, res) =>
+  registroController.deletar(req, res)
+);
 
 export default habito;
+
+//  rotas com validação schemas
+
+import { buscarHabitoSchema } from "../schema/buscarHabito.schema.js";
+import { deletarHabitoSchema } from "../schema/deletarHabito.schema.js";
+import { completarHabitoSchema } from "../schema/completarHabito.schema.js";
+
+// hábitos
+
+habito.get("/:id", validacao(buscarHabitoSchema), (req, res) =>
+  habitoController.listarUm(req, res)
+);
+habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
+  habitoController.atualizar(req, res)
+);
+habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) =>
+  habitoController.deletar(req, res)
+);
