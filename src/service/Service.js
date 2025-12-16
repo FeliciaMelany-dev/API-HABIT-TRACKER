@@ -1,77 +1,66 @@
 
 class Service {
-    constructor(modelName) { 
+    constructor(modelName) {
         this.model = modelName;
     }
 
     async listaTodosOsRegistros() {
-        try {
-            
-            const ReturnTodos = await this.model.findMany()
 
-            return ReturnTodos;
-        } catch (erro) {
-            
-        }
+        const ReturnTodos = await this.model.findMany()
+
+        return ReturnTodos;
     }
 
-    async listarUmId(idNumber){
-        try{
-            const date = await this.model.findUnique({where:{id: idNumber}});
+    async listarUmId(idNumber) {
 
-            return date;
-        }catch(error){
-
-        }
-    }
-
-    async criarNovo(data){
-        try{
-        const newData = await this.model.create(data);
-            return newData;
-        }catch(error){
-
-        }
-    }
-
-    async atualizarRegistro(id, dadosAtualizados){
-
-        try{
-
-        const newUpdateData = await this.model.update({
-            where: {id: (id)},
-            data:dadosAtualizados
+        const registro = await this.model.findUnique({
+            where: { id: idNumber }
         });
 
-        
-         return newUpdateData;
-
-        }catch(error){
+        if (!registro || registro.isDeleted) {
+            const error = new Error("Registro não encontrado");
+            error.status = 404;
+            throw error;
         }
-    }
-    async atualizarUm(id, data){
-        try{
-            const newUpdateOne = await this.model.update(data, {where:{id:id}});
-            return newUpdateOne;
 
-        }catch(error){
-
-        }
+        return registro;
     }
 
-    async deletarRegistro(id){
+    async criarNovo(data) {
+        const newData = await this.model.create(data);
+        return newData;
+    }
 
-        try{
-            const registro = await this.model.findUnique({where: {id:id}});
+    async atualizarRegistro(id, dadosAtualizados) {
 
-            if(!registro){
-                throw new Error ("Registro não encontrado");
-            }
-        
+        const registro = await this.model.findUnique({
+            where: { id: id }
+        })
+            ;
 
-        }catch(error){
-            console.error(error)
+        if (!registro || registro.isDeleted) {
+            const error = new Error("Registro não encontrado");
+            error.status = 404;
+            throw error;
         }
+
+        return this.model.update({
+            where: { id:id},
+            data: dadosAtualizados
+        });
+    }
+
+    async deletarRegistro(id) {
+        const registro = await this.model.findUnique({ 
+            where: { id: id } 
+        });
+
+        if (!registro || registro.isDeleted) {
+            const error = new Error("Registro não encontrado")
+            error.status = 404;
+            throw error;
+        }
+
         return await this.model.update({
             where: {
                 id: id
@@ -80,10 +69,10 @@ class Service {
                 isDeleted: true,
                 deletedAt: new Date()
             }
-             
-    })
 
-}
+        })
+
+    }
 }
 
 export default Service;

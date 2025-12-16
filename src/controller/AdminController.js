@@ -27,28 +27,27 @@ class AdminController extends Controller {
         const { id } = req.params;
         const { role } = req.body;
 
-        if (!["USER", "ADMIN"].includes(role)) {
-            return res.status(400).json({ error: "Role inválido" });
+        try{
+
+            const usuario = await this.adminService.atualizarRole(id, role)
+
+            return res.status(200).json(usuario);
+
+        }catch(error){
+            return res.status(400).json({error: error.message})
         }
-
-        const user = await prisma.user.update({
-            where: { id: Number(id) },
-            data: { role }
-        });
-
-        return res.json(user);
     }
 
 
     async restaurarUsuario(req, res) {
         try {
             const { id } = req.params;
-            const usuario = await this.adminService.restaurarUsuario(id);
+            const usuario = await this.adminService.reativarUsuario(id);
             return res.json(usuario);
 
         } catch (error) {
 
-            return res.status(400).json({ error: e.message });
+            return res.status(400).json({ error: error.message });
 
         }
     }
