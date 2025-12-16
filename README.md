@@ -69,14 +69,39 @@ A API estará acessível na porta configurada no seu `.env`.
 
 A API segue o padrão RESTful. Abaixo estão alguns dos endpoints principais:
 
-| Método | Endpoint | Descrição |
-| :--- | :--- | :--- |
-| `POST` | `/users` | Cria um novo usuário. |
-| `POST` | `/sessions` | Autentica o usuário e retorna um JWT. |
-| `POST` | `/habits` | Cria um novo hábito (Requer autenticação). |
-| `GET` | `/habits` | Lista os hábitos do usuário (Requer autenticação). |
-| `GET` | `/day/:date` | Retorna os hábitos possíveis e já completados para a data. |
-| `PATCH` | `/habits/:id/toggle` | Marca ou desmarca um hábito como completo para o dia atual. |
-| `GET` | `/summary` | Retorna um resumo de progresso e streaks. |
+### 👤 Endpoints para Usuários (USER)
 
-A documentação completa dos endpoints (Swagger/OpenAPI) pode ser encontrada em `/docs` (Se implementada).
+Estes são os *endpoints* básicos para o gerenciamento pessoal de hábitos.
+
+| Recurso | Método HTTP | Endpoint | Descrição |
+| :--- | :--- | :--- | :--- |
+| **Autenticação** | `POST` | `/register` | Cria uma nova conta de usuário. |
+| | `POST` | `/login` | Autentica o usuário e retorna o token JWT. |
+| **usuário** | `GET` | `/me` | Retorna o  usuário. (Requer Auth) |
+| | `PUT` | `/me` | Atualiza as informações do usuário. (Requer Auth) |
+| | `DELETE` | `/me` | Deleta o usuário. (Requer Auth) |
+
+#### Gerenciamento de Hábitos (CRUD)
+
+| Recurso | Método HTTP | Endpoint | Descrição |
+| :--- | :--- | :--- | :--- |
+| **Criação** | `POST` | `/` | Cria um novo hábito para o usuário. (Requer Auth) |
+| **Leitura** | `GET` | `/` | Lista **todos** os hábitos criados pelo usuário. (Requer Auth) |
+| | `GET` | `/:id` | Retorna detalhes de um hábito específico. (Requer Auth) |
+| **Atualização** | `PUT` | `/:id` | Atualiza completamente os detalhes de um hábito (título, recorrência). (Requer Auth) |
+| **Remoção** | `DELETE` | `/:id` | Remove permanentemente um hábito e seus registros. (Requer Auth) |
+
+### 👑 Endpoints para Administração (ADMIN)
+
+Estes *endpoints* são restritos a usuários com a função de `ADMIN` para operações de gestão e manutenção do sistema.
+
+| Recurso | Método HTTP | Endpoint | Descrição |
+| :--- | :--- | :--- | :--- |
+| **Usuários** | `GET` | `/users` | Lista todos os usuários cadastrados no sistema. |
+| | `GET` | `/users/:id` | Retorna um usuário específico. |
+| | `DELETE` | `/users/:id` | Remove um usuário e todos os seus dados. |
+| | `PATCH` | `/users/:id/restore` | Restaura um usuário e todos os seus dados. |
+| **Hábitos** | `GET` | `/habits` | Retorna todos os hábitos. |
+| | `GET` | `/users/:id/habits` | Retorna uma lista de hábitos de um usuário específico. |
+
+A documentação completa dos endpoints (Swagger) pode ser encontrada em `/docs` .
