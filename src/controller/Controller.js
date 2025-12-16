@@ -7,10 +7,9 @@ class Controller {
         try {
 
         const listaDeRegistro = await this.entidadeService.listaTodosOsRegistros();
-        res.json(listaDeRegistro);
+         return res.json(listaDeRegistro);
 
         } catch (erro) {
-            erro.status = 500;
 
             next(erro);
         }
@@ -31,18 +30,9 @@ class Controller {
         try {
             const umRegistro = await this.entidadeService.listarUmId(
                 idNumber );
-
-    
-
-            if (!umRegistro) {
-                const erro = new Error('Registro não encontrado');
-                erro.status = 404;
-                return next(erro);
-            }
-
             return res.status(200).json(umRegistro);
+
         } catch (erro) {
-            erro.status = 500;
             next(erro);
         }
     }
@@ -56,7 +46,6 @@ class Controller {
             return res.status(201).json(novoRegistroCriado);
 
         } catch (erro) {
-            erro.status = 400;
             next(erro);
         }
     }
@@ -64,18 +53,17 @@ class Controller {
     async atualizar(req, res, next) {
         const { id } = req.params;
         const dadosAtualizados = req.body;
+
+        if (Number.isNaN(id)) {
+            const error = new Error("ID inválido");
+            error.status = 400;
+            return next(error);
+        }
+
         try {
-            
             const foiAtualizado = await this.entidadeService.atualizarRegistro(
                 Number(id), dadosAtualizados
             );
-
-            if (!foiAtualizado) {
-                const erro = new Error('Registro não foi atualizado');
-                erro.status = 400;
-                return next(erro);
-            }
-
         return res.status(200).json({ mensagem: 'Atualizado com sucesso' });
 
         } catch (erro) {
@@ -86,13 +74,20 @@ class Controller {
 
     async deletar(req, res, next) {
         const { id } = req.params;
+
+        if (Number.isNaN(id)) {
+            const error = new Error("ID inválido");
+            error.status = 400;
+            return next(error);
+        }
+
         try {
             await this.entidadeService.deletarRegistro(
             Number(id)
             );
         return res.status(200).json({ mensagem: `id ${id} deletado` });
+
         } catch (erro) {
-            erro.status = 500;
             next(erro);
         }
     }

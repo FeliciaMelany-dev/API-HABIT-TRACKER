@@ -3,9 +3,11 @@ import autenticacao from "../middlewares/authMiddlewares.js";
 import { apenasAdmin } from "../middlewares/roleMiddleware.js";
 import AdminController from "../controller/AdminController.js";
 
+
 const admin = Router();
 
 const adminController = new AdminController();
+
 
 admin.use(autenticacao);
 admin.use(apenasAdmin);
@@ -21,7 +23,7 @@ admin.delete("/users/:id", (req, res) => adminController.deletar(req, res))
 
 
 admin.get("/habits", (req, res) => adminController.listarTodos(req, res))
-admin.get("/users/:id/habits", (req, res) => adminController.listarHabitosUsuario)
+admin.get("/users/:id/habits", (req, res) => adminController.listarHabitosUsuario(req, res))
 
 export default admin;
 

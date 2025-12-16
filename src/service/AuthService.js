@@ -34,11 +34,17 @@ class AuthService{
 
 
     async login (email, password){
-        
+
+        if(!email || !password){
+            throw new Error("Email e senha são obrigatórios")
+        }
         const usuario = await prisma.user.findUnique({
             where: {email}
         });
 
+        if(usuario.isDeleted){
+            throw new Error("Usuário desativado");
+        }
         if(!usuario){
             throw new Error ("Credenciais inválidas")
         }

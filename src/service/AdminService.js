@@ -35,6 +35,12 @@ class AdminService extends Service {
     }
 
     async atualizarRole(userId, role) {
+
+        if(!["USER", "ADMIN"].includes(role)){
+
+            throw new Error("Papel inválido")
+        }
+        
         return await this.model.update({
             where: { id: Number(userId) },
             data: { role }
