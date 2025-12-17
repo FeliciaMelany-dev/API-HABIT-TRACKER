@@ -1,10 +1,15 @@
 import express from 'express';
 import registerRoutes from './routes/index.js';
-import { errorHandler } from './middlewares/errorMiddlewares.js';
+import { errorHandler } from './middlewares/errorMiddlewares.js'; 
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 
+app.set("trust proxy", 1);
 const app = express();
 
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 registerRoutes(app);
 

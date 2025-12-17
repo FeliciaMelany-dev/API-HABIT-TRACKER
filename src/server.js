@@ -1,13 +1,11 @@
 import dotenv from "dotenv";
 import app from "./app.js";
 import prisma from "./config/prisma.js";
-import { swaggerSpec, swaggerUi } from "./config/swagger.js";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 async function iniciandoServer() {
