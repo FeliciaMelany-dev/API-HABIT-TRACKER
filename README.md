@@ -75,21 +75,21 @@ Estes são os *endpoints* básicos para o gerenciamento pessoal de hábitos.
 
 | Recurso | Método HTTP | Endpoint | Descrição |
 | :--- | :--- | :--- | :--- |
-| **Autenticação** | `POST` | `/register` | Cria uma nova conta de usuário. |
-| | `POST` | `/login` | Autentica o usuário e retorna o token JWT. |
-| **usuário** | `GET` | `/me` | Retorna o  usuário. (Requer Auth) |
-| | `PUT` | `/me` | Atualiza as informações do usuário. (Requer Auth) |
-| | `DELETE` | `/me` | Deleta o usuário. (Requer Auth) |
+| **Autenticação** | `POST` | `api/auth/register` | Cria uma nova conta de usuário. |
+| | `POST` | `api/auth/usuario/login` | Autentica o usuário e retorna o token JWT. |
+| **usuário** | `GET` | `api/usuario/me` | Retorna o  usuário. (Requer Auth) |
+| | `PUT` | `api/usuario/me` | Atualiza as informações do usuário. (Requer Auth) |
+| | `DELETE` | `api/usuario/me` | Deleta o usuário. (Requer Auth) |
 
 #### Gerenciamento de Hábitos (CRUD)
 
 | Recurso | Método HTTP | Endpoint | Descrição |
 | :--- | :--- | :--- | :--- |
-| **Criação** | `POST` | `/` | Cria um novo hábito para o usuário. (Requer Auth) |
-| **Leitura** | `GET` | `/` | Lista **todos** os hábitos criados pelo usuário. (Requer Auth) |
-| | `GET` | `/:id` | Retorna detalhes de um hábito específico. (Requer Auth) |
-| **Atualização** | `PUT` | `/:id` | Atualiza completamente os detalhes de um hábito (título, recorrência). (Requer Auth) |
-| **Remoção** | `DELETE` | `/:id` | Remove permanentemente um hábito e seus registros. (Requer Auth) |
+| **Criação** | `POST` | `api/habito/` | Cria um novo hábito para o usuário. (Requer Auth) |
+| **Leitura** | `GET` | `api/habito/` | Lista **todos** os hábitos criados pelo usuário. (Requer Auth) |
+| | `GET` | `api/habito/:id` | Retorna detalhes de um hábito específico. (Requer Auth) |
+| **Atualização** | `PUT` | `api/habito/:id` | Atualiza completamente os detalhes de um hábito (título, recorrência). (Requer Auth) |
+| **Remoção** | `DELETE` | `api/habito/:id` | Remove permanentemente um hábito e seus registros. (Requer Auth) |
 
 ### 👑 Endpoints para Administração (ADMIN)
 
@@ -97,11 +97,11 @@ Estes *endpoints* são restritos a usuários com a função de `ADMIN` para oper
 
 | Recurso | Método HTTP | Endpoint | Descrição |
 | :--- | :--- | :--- | :--- |
-| **Usuários** | `GET` | `/users` | Lista todos os usuários cadastrados no sistema. |
-| | `GET` | `/users/:id` | Retorna um usuário específico. |
-| | `DELETE` | `/users/:id` | Remove um usuário e todos os seus dados. |
-| | `PATCH` | `/users/:id/restore` | Restaura um usuário e todos os seus dados. |
-| **Hábitos** | `GET` | `/habits` | Retorna todos os hábitos. |
-| | `GET` | `/users/:id/habits` | Retorna uma lista de hábitos de um usuário específico. |
+| **Usuários** | `GET` | `api/admin/users` | Lista todos os usuários cadastrados no sistema. |
+| | `GET` | `api/admin/users/:id` | Retorna um usuário específico. |
+| | `DELETE` | `api/admin/users/:id` | Remove um usuário e todos os seus dados. |
+| | `PATCH` | `api/admin/users/:id/restore` | Restaura um usuário e todos os seus dados. |
+| **Hábitos** | `GET` | `api/admin/habits` | Retorna todos os hábitos. |
+| | `GET` | `api/admin/users/:id/habits` | Retorna uma lista de hábitos de um usuário específico. |
 
-A documentação completa dos endpoints (Swagger) pode ser encontrada em `/docs` .
+A documentação completa dos endpoints (Swagger) pode ser encontrada em `/api-docs` .
