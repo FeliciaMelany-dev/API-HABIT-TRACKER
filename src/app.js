@@ -3,13 +3,13 @@ import registerRoutes from './routes/index.js';
 import { errorHandler } from './middlewares/errorMiddlewares.js'; 
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
-import cors from "cors"; 
+
 
 const app = express();
 
 ;
 app.use(express.json());
-app.use(cors());
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 registerRoutes(app);
