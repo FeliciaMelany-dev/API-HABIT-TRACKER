@@ -11,7 +11,7 @@ export function validacao(schema) {
       return res.status(400).json({
         error: "Dados inválidos",
         detalhes: resultado.error.issues.map(issue => ({
-          campo: issue.path.join("."),
+          campo: issue.path.slice(1).join("."),
           mensagem: issue.message
         }))
       });

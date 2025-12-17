@@ -1,7 +1,7 @@
-// src/schema/habito/completarHabito.schema.js
+
 import z from "zod";
 
-export const completarHabitoSchema = z.object({
+export const buscarHabitoSchema = z.object({
   params: z.object({
     id: z.preprocess(
       val => (val === undefined ? "" : val),

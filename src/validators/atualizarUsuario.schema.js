@@ -1,4 +1,4 @@
-// src/schema/usuario/atualizarUsuario.schema.js
+
 import z from "zod";
 
 export const atualizarUsuarioSchema = z.object({

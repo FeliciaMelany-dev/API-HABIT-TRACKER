@@ -3,11 +3,11 @@ import HabitoController from "../controller/HabitoController.js";
 import RegistroController from "../controller/RegistroController.js";
 import { autenticacao } from "../middlewares/authMiddlewares.js";
 import { validacao } from "../middlewares/validateMiddleware.js";
-import { atualizaHabitSchema } from "../schema/atualizarHabito.js";
-import { criaHabito } from "../schema/criarHabito.schema.js";
-import { buscarHabitoSchema } from "../schema/buscarHabito.schema.js";
-import { deletarHabitoSchema } from "../schema/deletarHabito.schema.js";
-import { completarHabitoSchema } from "../schema/completarHabito.schema.js";
+import { atualizaHabitSchema } from "../validators/atualizarHabito.js";
+import { criaHabito } from "../validators/criarHabito.schema.js";
+import { buscarHabitoSchema } from "../validators/buscarHabito.schema.js";
+import { deletarHabitoSchema } from "../validators/deletarHabito.schema.js";
+import { completarHabitoSchema } from "../validators/completarHabito.schema.js";
 const habito = Router();
 const habitoController = new HabitoController();
 const registroController = new RegistroController();
@@ -132,7 +132,7 @@ habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) => habitoContro
  *         description: Registro de hábito completo criado
  */
 
-habito.post("/:id/completo", (req, res) => registroController.criar(req, res));
+habito.post("/:id/completo", validacao(completarHabitoSchema), (req, res) => registroController.criar(req, res));
 /**
  * @swagger
  * /habito/{id}/completo:
