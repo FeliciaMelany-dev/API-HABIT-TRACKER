@@ -4,7 +4,7 @@ import { errorHandler } from './middlewares/errorMiddlewares.js';
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
 
-app.set("trust proxy", 1);
+
 const app = express();
 
 app.use(express.json());
