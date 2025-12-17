@@ -20,7 +20,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://api-habit-tracker-10r9.onrender.com/",
+        url: "https://api-habit-tracker-10r9.onrender.com",
       },
     ],
   },
