@@ -3,9 +3,11 @@ import registerRoutes from './routes/index.js';
 import { errorHandler } from './middlewares/errorMiddlewares.js'; 
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
-
+import cors from "cors"; 
 
 const app = express();
+
+app.use(cors({ origin: "*", methods:["GET","POST","PUT","DELETE"], allowedHeaders:["Content-Type", "Authorization"] }));
 
 app.use(express.json());
 
