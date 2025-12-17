@@ -9,9 +9,8 @@ class Controller {
         const listaDeRegistro = await this.entidadeService.listaTodosOsRegistros();
          return res.json(listaDeRegistro);
 
-        } catch (erro) {
-
-            next(erro);
+        } catch (error) {
+            next(error);
         }
     }
 

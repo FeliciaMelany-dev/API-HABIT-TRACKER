@@ -135,7 +135,7 @@ admin.delete("/users/:id", (req, res) => adminController.deletar(req, res))
  *         description: Lista de hábitos retornada
  */
 
-admin.get("/habits", (req, res) => adminController.listarTodos(req, res)) 
+admin.get("/habits", (req, res, next) => adminController.listarTodosOsHabitos(req, res, next)) 
 /**
  * @swagger
  * /admin/users/{id}/habits:

@@ -1,6 +1,6 @@
 import Controller from "./Controller.js";
 import AdminService from "../service/AdminService.js";
-import prisma from "../config/prisma.js";
+import HabitoService from "../service/HabitoService.js";
 
 class AdminController extends Controller {
     constructor() {
@@ -8,8 +8,19 @@ class AdminController extends Controller {
         super(adminService);
 
         this.adminService = adminService;
+        this.habitoService = new HabitoService();
+        
     }
 
+    async listarTodosOsHabitos(req, res, next){
+        try{
+            const habitos = await this.habitoService.listarTodosOsHabitos();
+            return res.status(200).json(habitos)
+        }catch(error){
+            console.log(error)
+            next(error);
+        }
+    }
     async listarHabitosUsuario(req, res) {
         try {
             const { id } = req.params;

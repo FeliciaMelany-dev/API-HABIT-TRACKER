@@ -12,10 +12,10 @@ class RegistroService extends Service {
 
         const habitoid = Number(String(id).trim())
 
-        if(Number.isNaN(habitoid)){
-            throw new Error ('ID do hábito inválido')
+        if (Number.isNaN(habitoid)) {
+            throw new Error('ID do hábito inválido')
         }
-        
+
         const normalizedDate = normalizeDate(date)
 
         const habito = await prisma.habit.findFirst({
@@ -27,7 +27,7 @@ class RegistroService extends Service {
         });
 
         if (!habito) {
-            
+
             throw new Error("Hábito não encontrado ou não pertence ao usuário.")
         }
 
@@ -46,6 +46,13 @@ class RegistroService extends Service {
             data: {
                 habitId: habito.id,
                 date
+            },
+            select: {
+                id: true,
+                habitId: true,
+                date: true,
+                createdAt: true,
+
             }
         })
     }
@@ -59,15 +66,29 @@ class RegistroService extends Service {
             }
         });
 
+
         if (!habito) {
-            throw new Error("Hábito não encontrado ou não pertence ao usuário");
+            throw new Error("Hábito não encontrado");
         }
 
-        return await prisma.habitCompletion.findMany({
-            where: { habitId: habito.id ,
-            isDeleted: false},
-            orderBy: { date: "desc" }
+        const concluido = await prisma.habitCompletion.findMany({
+            where: {
+                habitId: habito.id,
+                isDeleted: false
+            },
+            orderBy: { date: "desc" },
+            select: {
+                id: true,
+                habitId: true,
+                date: true,
+                createdAt: true
+            }
         });
+
+        if (concluido.length === 0) {
+            throw new Error("Você ainda não concluiu nenhum hábito")
+        }
+        return concluido;
     }
 
 

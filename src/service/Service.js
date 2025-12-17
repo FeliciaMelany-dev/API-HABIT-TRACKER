@@ -6,7 +6,17 @@ class Service {
 
     async listaTodosOsRegistros() {
 
-        const ReturnTodos = await this.model.findMany()
+        const ReturnTodos = await this.model.findMany({
+            where: {
+            isDeleted:false},
+            select:{
+                id:true,
+                name: true,
+                email:true,
+                role: true,
+                createdAt: true
+            }
+        })
 
         return ReturnTodos;
     }
@@ -14,7 +24,14 @@ class Service {
     async listarUmId(idNumber) {
 
         const registro = await this.model.findUnique({
-            where: { id: idNumber }
+            where: { id: idNumber },
+            select:{
+                id:true,
+                name: true,
+                email:true,
+                role: true,
+                createdAt: true
+            }
         });
 
         if (!registro || registro.isDeleted) {
@@ -44,9 +61,18 @@ class Service {
             throw error;
         }
 
+        if("role" in dadosAtualizados){
+            const error = new Error("Você não tem autorização para alterar o papel do usuário");
+
+            error.status = 403;
+            throw error;
+        }
+
+        const {role, ...dadosPermitidos} = dadosAtualizados;
+
         return this.model.update({
             where: { id:id},
-            data: dadosAtualizados
+            data: dadosPermitidos
         });
     }
 

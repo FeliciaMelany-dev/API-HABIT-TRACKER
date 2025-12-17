@@ -8,6 +8,12 @@ app.use(express.json());
 
 registerRoutes(app);
 
+app.use((req, res) =>{
+    return res.status(404).json({
+        error: "Rota não encontrada"
+    })
+})
+
 app.use(errorHandler);
 
 export default app;

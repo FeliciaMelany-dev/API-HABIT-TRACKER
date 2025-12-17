@@ -48,7 +48,7 @@ usuario.get("/me", (req, res) =>  usuarioController.me(req, res));
  *       401:
  *         description: Token inválido ou ausente
  */
-usuario.put("/me", (req, res) => usuarioController.atualizar(req, res)) 
+usuario.put("/me", (req, res, next) => usuarioController.atualizar(req, res, next)) 
 
 /**
  * @swagger

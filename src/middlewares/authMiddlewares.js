@@ -15,19 +15,16 @@ export async function autenticacao(req, res, next){
     try{
         const decodifica = jwt.verify(token, process.env.JWT_SECRET);
 
-        const usuario = await prisma.user.findUnique({
-            where: { id: decodifica.id,
-                email: decodifica.email,
-                role: decodifica.role
-             },
-            select: { id: true, email: true, name: true, role: true }
+        const user = await prisma.user.findUnique({
+            where: { id: decodifica.id},
+            select: { id: true, email: true, name: true, role: true, isDeleted: true}
         });
 
-        if (!usuario) {
-            return res.status(401).json({ error: "Usuário não encontrado" });
+        if (!user || user.isDeleted) {
+            return res.status(401).json({ error: "Usuário deletado ou inexistente" });
         }
 
-        req.user = usuario;
+        req.user = user;
         next()
 
     }catch(error){

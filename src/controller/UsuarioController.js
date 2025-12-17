@@ -35,7 +35,7 @@ class UsuarioController extends Controller {
         }
     }
 
-    async atualizar (req, res){
+    async atualizar (req, res, next){
         try{
 
             const userId = req.user.id;
@@ -53,7 +53,7 @@ class UsuarioController extends Controller {
                 createdAt});
 
         }catch(error){
-            return res.status(400).json({ error: error.message });
+            next(error);
         }
     }
 

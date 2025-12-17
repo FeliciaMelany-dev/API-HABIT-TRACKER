@@ -13,10 +13,7 @@ class RegistroController extends Controller {
         try {
             const { id } = req.params;
             const userId = req.user.id;
-            const { date } = req.body;
-
-            
-
+            const { date } = req.body || {};
 
             const registro = await this.registroService.registrarConclusao(
                 id,
@@ -40,7 +37,9 @@ class RegistroController extends Controller {
             const registros = await this.registroService.listarPorHabito(id, userId);
 
             return res.status(200).json(registros);
+
         } catch (error) {
+            console.log(error)
             return res.status(400).json({ error: error.message });
         }
     }
@@ -52,7 +51,7 @@ class RegistroController extends Controller {
 
             await this.registroService.deletarRegistro(registroId, userId);
 
-            return res.status(204).send("Apagado com sucesso");
+            return res.status(204).end();
         } catch (error) {
             return res.status(400).json({ error: error.message });
         }

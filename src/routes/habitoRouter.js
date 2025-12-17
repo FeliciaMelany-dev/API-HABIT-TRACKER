@@ -5,6 +5,9 @@ import { autenticacao } from "../middlewares/authMiddlewares.js";
 import { validacao } from "../middlewares/validateMiddleware.js";
 import { atualizaHabitSchema } from "../schema/atualizarHabito.js";
 import { criaHabito } from "../schema/criarHabito.schema.js";
+import { buscarHabitoSchema } from "../schema/buscarHabito.schema.js";
+import { deletarHabitoSchema } from "../schema/deletarHabito.schema.js";
+import { completarHabitoSchema } from "../schema/completarHabito.schema.js";
 const habito = Router();
 const habitoController = new HabitoController();
 const registroController = new RegistroController();
@@ -64,7 +67,7 @@ habito.get("/", (req, res) => habitoController.listarTodos(req, res));
  *       201:
  *         description: Hábito criado com sucesso
  */
-habito.get("/:id", (req, res) => habitoController.listarUm(req, res));
+habito.get("/:id", validacao(buscarHabitoSchema), (req, res) => habitoController.listarUm(req, res));
 /**
  * @swagger
  * /habito/{id}:
@@ -111,7 +114,7 @@ habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
  *       204:
  *         description: Hábito removido com sucesso
  */
-habito.delete("/:id", (req, res) => habitoController.deletar(req, res));
+habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) => habitoController.deletar(req, res));
 /**
  * @swagger
  * /habito/{id}/completo:
@@ -176,20 +179,4 @@ habito.delete("/:id/completo/:registroId", (req, res) =>
 
 export default habito;
 
-//  rotas com validação schemas
 
-import { buscarHabitoSchema } from "../schema/buscarHabito.schema.js";
-import { deletarHabitoSchema } from "../schema/deletarHabito.schema.js";
-import { completarHabitoSchema } from "../schema/completarHabito.schema.js";
-
-// hábitos
-
-habito.get("/:id", validacao(buscarHabitoSchema), (req, res) =>
-  habitoController.listarUm(req, res)
-);
-habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
-  habitoController.atualizar(req, res)
-);
-habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) =>
-  habitoController.deletar(req, res)
-);
