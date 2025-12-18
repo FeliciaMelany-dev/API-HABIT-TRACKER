@@ -26,7 +26,7 @@ habito.post("/", validacao(criaHabito), (req, res) =>
 );
 /**
  * @swagger
- * api/habito/{id}:
+ * /api/habito/{id}:
  *   get:
  *     summary: Busca um hábito pelo ID
  *     tags: [Habitos]
@@ -46,7 +46,7 @@ habito.post("/", validacao(criaHabito), (req, res) =>
 habito.get("/", (req, res) => habitoController.listarTodos(req, res));
 /**
  * @swagger
- * api/habito:
+ * /api/habito:
  *   post:
  *     summary: Cria um novo hábito
  *     tags: [Habitos]
@@ -70,7 +70,7 @@ habito.get("/", (req, res) => habitoController.listarTodos(req, res));
 habito.get("/:id", validacao(buscarHabitoSchema), (req, res) => habitoController.listarUm(req, res));
 /**
  * @swagger
- * api/habito/{id}:
+ * /api/habito/{id}:
  *   put:
  *     summary: Atualiza um hábito existente
  *     tags: [Habitos]
@@ -100,7 +100,7 @@ habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
 );
 /**
  * @swagger
- * api/habito/{id}:
+ * /api/habito/{id}:
  *   delete:
  *     summary: Remove um hábito
  *     tags: [Habitos]
@@ -117,7 +117,7 @@ habito.put("/:id", validacao(atualizaHabitSchema), (req, res) =>
 habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) => habitoController.deletar(req, res));
 /**
  * @swagger
- * api/habito/{id}/completo:
+ * /api/habito/{id}/completo:
  *   post:
  *     summary: Marca um hábito como completo
  *     tags: [Habitos]
@@ -153,7 +153,7 @@ habito.post("/:id/completo", validacao(completarHabitoSchema), (req, res) => reg
 habito.get("/:id/completo", (req, res) => registroController.listar(req, res));
 /**
  * @swagger
- * api/habito/{id}/completo/{registroId}:
+ * /api/habito/{id}/completo/{registroId}:
  *   delete:
  *     summary: Remove um registro de conclusão de hábito
  *     tags: [Habitos]

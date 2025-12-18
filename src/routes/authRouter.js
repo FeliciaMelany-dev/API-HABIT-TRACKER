@@ -16,7 +16,7 @@ const authController = new AuthController();
 
 /**
  * @swagger
- * api/auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Registra um novo usuário
  *     tags: [Auth]
@@ -49,7 +49,7 @@ auth.post("/register", validacao(registerSchema), (req, res) =>
 
 /**
  * @swagger
- * api/auth/usuario/login:
+ * /api/auth/usuario/login:
  *   post:
  *     summary: Faz login e retorna um token JWT
  *     tags: [Auth]
