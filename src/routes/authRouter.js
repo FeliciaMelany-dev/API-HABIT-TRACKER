@@ -29,7 +29,7 @@ const authController = new AuthController();
  *             required:
  *               - nome
  *               - email
- *               - senha
+ *               - password
  *             properties:
  *               nome:
  *                 type: string
@@ -61,7 +61,7 @@ auth.post("/register", validacao(registerSchema), (req, res) =>
  *             type: object
  *             required:
  *               - email
- *               - senha
+ *               - password
  *             properties:
  *               email:
  *                 type: string
