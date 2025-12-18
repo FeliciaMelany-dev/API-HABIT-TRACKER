@@ -9,7 +9,7 @@ const usuarioController = new UsuarioController();
 usuario.use(autenticacao);
 /**
  * @swagger
- * /usuario/me:
+ * api/usuario/me:
  *   get:
  *     summary: Retorna os dados do usuário autenticado
  *     tags: [Usuario]
@@ -25,7 +25,7 @@ usuario.use(autenticacao);
 usuario.get("/me", (req, res) =>  usuarioController.me(req, res)); 
 /**
  * @swagger
- * /usuario/me:
+ * api/usuario/me:
  *   put:
  *     summary: Atualiza os dados do usuário autenticado
  *     tags: [Usuario]
@@ -52,7 +52,7 @@ usuario.put("/me", (req, res, next) => usuarioController.atualizar(req, res, nex
 
 /**
  * @swagger
- * /usuario/me:
+ * api/usuario/me:
  *   delete:
  *     summary: Remove o usuário autenticado
  *     tags: [Usuario]

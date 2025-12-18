@@ -21,7 +21,7 @@ admin.use(apenasAdmin);
 
 /**
  * @swagger
- * /admin/users/{id}/role:
+ * api/admin/users/{id}/role:
  *   patch:
  *     summary: Atualiza a role de um usuário
  *     tags: [Admin]
@@ -52,7 +52,7 @@ admin.use(apenasAdmin);
 admin.patch('/users/:id/role', (req, res) => adminController.atualizarRole(req, res))
 /**
  * @swagger
- * /admin/users:
+ * api/admin/users:
  *   get:
  *     summary: Lista todos os usuários
  *     tags: [Admin]
@@ -65,7 +65,7 @@ admin.patch('/users/:id/role', (req, res) => adminController.atualizarRole(req, 
 admin.get("/users", (req, res) => adminController.listarTodos(req,res))
 /**
  * @swagger
- * /admin/users/{id}:
+ * api/admin/users/{id}:
  *   get:
  *     summary: Busca um usuário pelo ID
  *     tags: [Admin]
@@ -86,7 +86,7 @@ admin.get("/users", (req, res) => adminController.listarTodos(req,res))
 admin.get("/users/:id", (req, res) => adminController.listarUmId(req,res)) 
 /**
  * @swagger
- * /admin/users/{id}/restore:
+ * api/admin/users/{id}/restore:
  *   patch:
  *     summary: Restaura um usuário removido
  *     tags: [Admin]
@@ -105,7 +105,7 @@ admin.get("/users/:id", (req, res) => adminController.listarUmId(req,res))
 admin.patch("/users/:id/restore", (req, res) => adminController.restaurarUsuario(req, res)) 
 /**
  * @swagger
- * /admin/users/{id}:
+ * api/admin/users/{id}:
  *   delete:
  *     summary: Remove um usuário pelo ID
  *     tags: [Admin]
@@ -124,7 +124,7 @@ admin.patch("/users/:id/restore", (req, res) => adminController.restaurarUsuario
 admin.delete("/users/:id", (req, res) => adminController.deletar(req, res))
 /**
  * @swagger
- * /admin/habits:
+ * api/admin/habits:
  *   get:
  *     summary: Lista todos os hábitos cadastrados
  *     tags: [Admin]
@@ -138,7 +138,7 @@ admin.delete("/users/:id", (req, res) => adminController.deletar(req, res))
 admin.get("/habits", (req, res, next) => adminController.listarTodosOsHabitos(req, res, next)) 
 /**
  * @swagger
- * /admin/users/{id}/habits:
+ * api/admin/users/{id}/habits:
  *   get:
  *     summary: Lista hábitos de um usuário específico
  *     tags: [Admin]
