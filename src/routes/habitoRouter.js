@@ -135,7 +135,7 @@ habito.delete("/:id", validacao(deletarHabitoSchema), (req, res) => habitoContro
 habito.post("/:id/completo", validacao(completarHabitoSchema), (req, res) => registroController.criar(req, res));
 /**
  * @swagger
- * api/habito/{id}/completo:
+ * /api/habito/{id}/completo:
  *   get:
  *     summary: Lista registros de conclusão de um hábito
  *     tags: [Habitos]
